@@ -1,0 +1,1 @@
+../../../../../node_modules/react-native-color-matrix-image-filters/ios/CMIFColorMatrixImageFilter.h
