@@ -4,10 +4,7 @@
   "summary": "Various color matrix based image filters for iOS & Android",
   "homepage": "https://github.com/iyegoroff/react-native-color-matrix-image-filters#readme",
   "license": "MIT",
-  "authors": {
-    "name": "iyegoroff",
-    "email": "iegoroff@gmail.com"
-  },
+  "authors": "iyegoroff <iegoroff@gmail.com>",
   "platforms": {
     "ios": "9.0"
   },

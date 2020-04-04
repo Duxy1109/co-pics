@@ -32,7 +32,7 @@ export default function App(){
 
   const logIn = () => {
     console.log("logging in for " + phone);
-    fetch('https://tranquil-journey-39333.herokuapp.com/users/'+phone, {
+    fetch('http://protected-anchorage-99893.herokuapp.com/users/'+phone, {
          method: 'GET'
       })
       .then((response) => response.json())
@@ -85,7 +85,7 @@ export default function App(){
       password: password
       };
 
-      fetch("https://tranquil-journey-39333.herokuapp.com/users",
+      fetch("http://protected-anchorage-99893.herokuapp.com/users",
       {
         method: "POST",
         headers: {
@@ -95,7 +95,7 @@ export default function App(){
       body: JSON.stringify(data)
       }).then((response) => response.json())
       .then((responseJson) => {
-         console.log(responseJson);
+        //  console.log(responseJson);
       })
       .catch((error) => {
         console.log(error);

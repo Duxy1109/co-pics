@@ -8,7 +8,7 @@ const SessionList = props => {
 
 const get_log = query => {
     console.log("get log");
-    fetch('https://tranquil-journey-39333.herokuapp.com/maps/', {
+    fetch('http://protected-anchorage-99893.herokuapp.com/maps/', {
          method: 'GET'
       })
       .then((response) => response.json())
@@ -22,7 +22,10 @@ const get_log = query => {
           }
         }
         // console.log(items);
-        if (sessionDataList.length == 0 || 
+        if (sessionDataList.length == 0 && items.length!=0){
+          setsessionDataList(items);
+        }
+        if (sessionDataList.length != 0 &&
           items[items.length-1].session != sessionDataList[sessionDataList.length-1].session){
           setsessionDataList(items);
         }

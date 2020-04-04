@@ -16,6 +16,8 @@ export default function AddSessionModal (props) {
   const [image, setImage] = useState("");
   const [text, setText] = useState("");
   const [error, setError] = useState("");
+  const [sessionID, setSessionID] = useState("");
+  const [IDerror, setIDError] = useState("");
 
   const selectPhoto = () => {
     const options = {
@@ -57,6 +59,8 @@ export default function AddSessionModal (props) {
     setImage("");
     setText("");
     setError("");
+    setIDError("");
+    setSessionID("");
   };
 
   const update_db= (photoname, sessionname)=> {
@@ -66,10 +70,10 @@ export default function AddSessionModal (props) {
     var data = {
       photo: photoname,
       name: sessionname,
-      filter: "none"
+      filter: "0"
     };
 
-    fetch("https://tranquil-journey-39333.herokuapp.com/sessions",
+    fetch("http://protected-anchorage-99893.herokuapp.com/sessions",
       {
         method: "POST",
         headers: {
@@ -101,7 +105,7 @@ export default function AddSessionModal (props) {
 
     // console.log(data);
 
-    fetch("https://tranquil-journey-39333.herokuapp.com/maps",
+    fetch("http://protected-anchorage-99893.herokuapp.com/maps",
       {
         method: "POST",
         headers: {
@@ -127,10 +131,68 @@ export default function AddSessionModal (props) {
 
   };
 
+  const find_session = () =>{
+    console.log("find photo name for session ID");
+    fetch('http://protected-anchorage-99893.herokuapp.com/sessions/'+sessionID, {
+         method: 'GET'
+      })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        // console.log(responseJson);
+        update_db2(sessionID,responseJson.photo);
+      })
+      .catch((error) => {
+        console.log(error);
+        setIDError("An Error Occured");
+      });
+  };
+
+  const find_map = ()=>{
+    console.log("check if session already added");
+    
+    fetch('http://protected-anchorage-99893.herokuapp.com/maps/', {
+         method: 'GET'
+      })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        // console.log(responseJson);
+        var found = 0;
+        var alreadyin = 0;
+
+        for (var i = 0; i < responseJson.length; i++) {
+          var item = responseJson[i];
+          if (item.session == sessionID){
+            found = 1;
+          }
+          if (item.user == props.uid && item.session == sessionID){
+            alreadyin = 1;
+            break;
+          }
+        }
+        clearInput();
+        if (found == 0){
+          setIDError("This Session Number Does Not Exist");
+        }else if (alreadyin == 1){
+          setIDError("This Session is Already in The List");
+        }else{
+          find_session();
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        setIDError("An Error Occured");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const add_session= ()=> {
     console.log("add_session");
     // const uid = this.props.uid;
-    if (image == "" || text == ""){
+    if (sessionID != ""){
+      find_map();
+    }else if (image == "" || text == ""){
       clearInput();
       setError("Please fill in Photoname And select a photo below");
       // return;
@@ -151,11 +213,11 @@ export default function AddSessionModal (props) {
       // console.log(imagefile);
 
       const options = {
-        bucket: "AAAAAA",
-        region: "BBBBBB",
-        accessKey: "CCCCCC",
-        secretKey: "DDDDDD",
-        successActionStatus: 100
+        bucket: "AAA",
+        region: "BBB",
+        accessKey: "CCC",
+        secretKey: "DDD",
+        successActionStatus: 201
       };
 
       RNS3.put(imagefile, options).then(response => {
@@ -207,8 +269,21 @@ export default function AddSessionModal (props) {
               }}
             />
             <View style={styles.modalContent}>
+            <Text style={styles.orText}>Please Enter a Session ID or Create a New Session</Text>
             <View style={styles.textInputContainer}>
-                <Text style={styles.photoText}>Session Name:</Text>
+                <Text style={styles.photoText}>Enter a Session ID:</Text>
+                <TextInput
+                  style={styles.textInput}
+                  onChangeText={sessionID => {
+                    setSessionID(sessionID);
+                  }}
+                  value={sessionID}
+                  // multiline
+                />
+              <Text style={styles.errorText}>{IDerror}</Text>
+              </View>
+            <View style={styles.textInputContainer}>
+                <Text style={styles.photoText}>New Session Name:</Text>
                 <TextInput
                   style={styles.textInput}
                   onChangeText={text => {
@@ -255,8 +330,14 @@ const styles = StyleSheet.create({
   },
   photoText: {
     marginHorizontal: 10,
-    marginVertical: 20,
+    marginVertical: 10,
     fontSize: 20,
+    color: "#5ACFCF"
+  },
+  orText: {
+    marginHorizontal: 10,
+    marginVertical: 10,
+    fontSize: 15,
     color: "#5ACFCF"
   },
   errorText: {
@@ -276,13 +357,13 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     marginHorizontal: 10,
-    marginVertical: 20
+    marginVertical: 0
   },
   textInputContainer: {
     alignItems: "stretch"
   },
   textInput: {
-    height: 50,
+    height: 40,
     padding: 10,
     marginHorizontal: 10,
     marginVertical: 5,

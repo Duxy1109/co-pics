@@ -8,7 +8,7 @@ const SessionItem = props => {
 
 const get_session = query => {
     console.log("get each log");
-    fetch('https://tranquil-journey-39333.herokuapp.com/sessions/'+props.sessionData.item.session, {
+    fetch('http://protected-anchorage-99893.herokuapp.com/sessions/'+props.sessionData.item.session, {
          method: 'GET'
       })
       .then((response) => response.json())
