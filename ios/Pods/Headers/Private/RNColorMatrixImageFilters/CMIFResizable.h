@@ -1,1 +1,0 @@
-../../../../../node_modules/react-native-color-matrix-image-filters/ios/CMIFResizable.h
