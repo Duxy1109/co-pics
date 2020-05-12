@@ -29,7 +29,7 @@ const ProfileScreen = props => {
 
 const get_user = (query, userData, setuserData) => {
   console.log("profile page for " + query);
-  fetch('https://tranquil-journey-39333.herokuapp.com/users/'+query, {
+  fetch('http://localhost:3001/users/'+query, {
         method: 'GET'
     })
     .then((response) => response.json())

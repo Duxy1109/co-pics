@@ -3,9 +3,10 @@ import { View, Text, StyleSheet } from "react-native";
 
 
 const MiddleScreen = props => {
+
   return (
     <View style={styles.container}>
-      <Text>Wait For Development</Text>
+      <Text>Room For Future Development</Text>
     </View>
   );
 };

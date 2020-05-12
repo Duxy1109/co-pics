@@ -65,7 +65,7 @@ const updateUser = updateData => {
   updateDataF[updateData.key] = updateData.value;
 
   console.log("update");
-  fetch("https://tranquil-journey-39333.herokuapp.com/users/"+userData.phone,
+  fetch("http://localhost:3001/users/"+userData.phone,
       {
         method: "PATCH",
         headers: {

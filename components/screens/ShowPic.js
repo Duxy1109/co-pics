@@ -1,5 +1,5 @@
 import React from 'react';
-import {View,Text,Image,StyleSheet} from "react-native";
+import {View,Text,Image,StyleSheet,Dimensions} from "react-native";
 
 import {
     Grayscale,
@@ -9,9 +9,14 @@ import {
     concatColorMatrices,
     invert,
     contrast,
-    saturate
+    saturate,
+    Night,
+    Cool,
+    ColorTone,
+    Temperature,
+    Brightness
   } from 'react-native-color-matrix-image-filters'; 
-
+const { width, height } = Dimensions.get('window');
 function ShowPic({ image, selectedFilter }) {
     if(selectedFilter == 1){
         return (
@@ -21,26 +26,41 @@ function ShowPic({ image, selectedFilter }) {
         );
     } else if(selectedFilter == 2){
         return (
-            <Tint amount={1.25}>
-                <Sepia>
-                    <Image source={image} style={styles.stretch}/>
-                </Sepia>
-            </Tint>
-        )
-    } else if(selectedFilter == 3){
-        return (
-            <ColorMatrix
-                matrix={concatColorMatrices([saturate(-0.9), contrast(5.2), invert()])}
-                // alt: matrix={[saturate(-0.9), contrast(5.2), invert()]}
-            >
+            <ColorMatrix matrix={concatColorMatrices([saturate(-8.2), contrast(0.9), invert()])}>
                 <Image source={image} style={styles.stretch}/>
             </ColorMatrix>
         )
-    } else if(selectedFilter == 0){
+    } else if(selectedFilter == 3){
         return (
-            <Image source={image} style={styles.stretch}/>
+            <Tint amount={0.9}>
+                <Image source={image} style={styles.stretch}/>
+            </Tint>
         )
-    }
+    } else if(selectedFilter == 4){
+        return (
+            <Brightness amount={1.2}>
+                <Cool>
+                    <Image source={image} style={styles.stretch}/>
+                </Cool>
+            </Brightness>
+        )
+    } else if(selectedFilter == 5){
+        return (
+            <Temperature amount={0.3}>
+                    <Image source={image} style={styles.stretch}/>
+            </Temperature>
+        )
+    } else if(selectedFilter == 6){
+        return (
+            <Cool>
+                    <Image source={image} style={styles.stretch}/>
+            </Cool>
+        )
+    } else if(selectedFilter == 0){
+            return (
+                <Image source={image} style={styles.stretch}/>
+            )
+        }
 }
 
 const styles = StyleSheet.create({
@@ -57,9 +77,9 @@ const styles = StyleSheet.create({
         padding:15,
     },
     stretch: {
-        width: 420,
-        height: 200,
-        resizeMode: 'stretch',
+        width: width,
+        height: 220,
+        resizeMode: 'contain',
         backgroundColor: "white",
       },
 })

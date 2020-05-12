@@ -10,7 +10,10 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@kesha-antonov/react-native-action-cable": "^1.0.5",
     "@react-native-community/masked-view": "^0.1.7",
+    "@terrylinla/react-native-sketch-canvas": "^0.8.0",
+    "cucumber": "^6.0.5",
     "expo-constants": "^8.0.0",
     "expo-image-picker": "^8.0.2",
     "expo-permissions": "^8.0.0",
@@ -18,7 +21,7 @@
     "react-native": "0.61.5",
     "react-native-action-button": "^2.8.5",
     "react-native-aws3": "^0.0.9",
-    "react-native-color-matrix-image-filters": "5.0.1",
+    "react-native-color-matrix-image-filters": "^5.2.4",
     "react-native-elements": "^1.2.7",
     "react-native-gesture-handler": "^1.6.0",
     "react-native-image-picker": "^2.3.1",
@@ -37,6 +40,7 @@
     "@babel/runtime": "^7.6.2",
     "@react-native-community/eslint-config": "^0.0.5",
     "babel-jest": "^24.9.0",
+    "detox": "^16.0.2",
     "eslint": "^6.5.1",
     "jest": "^24.9.0",
     "metro-react-native-babel-preset": "^0.56.0",
@@ -44,5 +48,18 @@
   },
   "jest": {
     "preset": "react-native"
+  },
+  "detox": {
+    "test-runner": "jest",
+    "configurations": {
+      "ios.sim.debug": {
+        "binaryPath": "ios/build/Build/Products/Debug-iphonesimulator/ppp.app",
+        "build": "xcodebuild -workspace ios/ppp.xcworkspace -scheme ppp -configuration Debug -sdk iphonesimulator -derivedDataPath ios/build",
+        "type": "ios.simulator",
+        "device": {
+          "type": "iPhone 11"
+        }
+      }
+    }
   }
 }
